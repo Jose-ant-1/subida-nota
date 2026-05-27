@@ -2,6 +2,10 @@ package org.iesbelen.exament4.service;
 
 import org.iesbelen.exament4.model.Curso;
 import org.iesbelen.exament4.repository.CursoRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -44,4 +48,16 @@ public class CursoService {
             return c;
         }).orElseThrow(() -> new RuntimeException("No existe curso con id: " + id));
     }
+
+    public Page<Curso> getAllFiltered(String campo, String busqueda, int pagina, int tamano, String ordenacion, String sentido) {
+        // ordenar
+        Sort sort = Sort.by(sentido.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC,
+                (ordenacion == null || ordenacion.isEmpty()) ? "precio" : ordenacion);
+
+        // paginar
+        Pageable pageable = PageRequest.of(pagina, tamano, sort);
+
+        return cursoRepository.findByFiltro(campo, busqueda, pageable);
+    }
+
 }

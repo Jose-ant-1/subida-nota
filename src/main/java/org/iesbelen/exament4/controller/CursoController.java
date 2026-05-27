@@ -2,6 +2,7 @@ package org.iesbelen.exament4.controller;
 
 import org.iesbelen.exament4.model.Curso;
 import org.iesbelen.exament4.service.CursoService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -16,8 +17,15 @@ public class CursoController {
     }
 
     @GetMapping({"", "/"})
-    public List<Curso> all() {
-        return this.cursoService.getAll();
+    public Page<Curso> all(
+            @RequestParam(required = false, defaultValue = "titulo") String campo,
+            @RequestParam(required = false) String busqueda,
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int tamano,
+            @RequestParam(defaultValue = "precio") String ordenacion,
+            @RequestParam(defaultValue = "asc") String sentido) {
+
+        return this.cursoService.getAllFiltered(campo, busqueda, pagina, tamano, ordenacion, sentido);
     }
 
     @PostMapping({"", "/"})
