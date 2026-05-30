@@ -33,14 +33,12 @@ public class InscripcionService {
         Curso curso = cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        // Guardar la nueva inscripción
         Inscripccion inscripcion = Inscripccion.builder()
                 .alumno(alumno)
                 .curso(curso)
                 .build();
         inscripcionRepository.save(inscripcion);
 
-        // Obtener todas las inscripciones del alumno para calcular la inversión
         List<Inscripccion> inscripciones = inscripcionRepository.findByAlumnoId(alumnoId);
         List<Curso> cursosInscritos = inscripciones.stream().map(Inscripccion::getCurso).toList();
 

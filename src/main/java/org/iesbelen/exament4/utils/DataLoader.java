@@ -29,15 +29,12 @@ public class DataLoader implements CommandLineRunner {
 
         if (nivelRepository.count() > 0) {
             System.out.println("Los datos ya existen. Saltando la carga inicial.");
-            return; // Sale del método y no inserta nada más
+            return;
         }
 
-        // 1. Crear Niveles (al menos 3)
         Nivel n1 = nivelRepository.save(Nivel.builder().nombre("Básico").descripcion("Nivel inicial").build());
         Nivel n2 = nivelRepository.save(Nivel.builder().nombre("Intermedio").descripcion("Nivel medio").build());
-        Nivel n3 = nivelRepository.save(Nivel.builder().nombre("Avanzado").descripcion("Nivel experto").build());
 
-        // 2. Crear Alumnos (al menos 5)
         for (int i = 1; i <= 5; i++) {
             alumnoRepository.save(Alumno.builder()
                     .username("alumno" + i)
@@ -46,7 +43,6 @@ public class DataLoader implements CommandLineRunner {
                     .build());
         }
 
-        // 3. Crear Cursos (al menos 5)
         for (int i = 1; i <= 5; i++) {
             cursoRepository.save(Curso.builder()
                     .titulo("Curso " + i)
@@ -57,7 +53,6 @@ public class DataLoader implements CommandLineRunner {
                     .build());
         }
 
-        // 4. Crear Inscripciones (al menos 5)
         List<Alumno> alumnos = alumnoRepository.findAll();
         List<Curso> cursos = cursoRepository.findAll();
 

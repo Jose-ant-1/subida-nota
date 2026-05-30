@@ -50,7 +50,7 @@ public class CursoService {
     }
 
     public Page<Curso> getAllFiltered(String campo, String busqueda, int pagina, int tamano, String ordenacion, String sentido) {
-        // ordenar
+         // ordenar
         Sort sort = Sort.by(sentido.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC,
                 (ordenacion == null || ordenacion.isEmpty()) ? "precio" : ordenacion);
 

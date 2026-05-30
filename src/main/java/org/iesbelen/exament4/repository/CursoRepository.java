@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CursoRepository extends JpaRepository<Curso, Long> {
 
-    // Usamos JPQL para buscar por título o resumen dinámicamente
     @Query("SELECT c FROM Curso c WHERE " +
             "(:campo = 'titulo' AND c.titulo LIKE %:valor%) OR " +
             "(:campo = 'resumen' AND c.resumen LIKE %:valor%) OR " +

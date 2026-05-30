@@ -1,14 +1,13 @@
 package org.iesbelen.exament4.controller;
 
 import org.iesbelen.exament4.dto.InscripcionDTO;
-import org.iesbelen.exament4.repository.InscripcionRepository;
 import org.iesbelen.exament4.service.InscripcionService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("examen/inscribir")
 public class InscripcionController {
 
