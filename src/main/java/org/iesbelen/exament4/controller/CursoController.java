@@ -4,6 +4,8 @@ import org.iesbelen.exament4.dto.CursoDTO;
 import org.iesbelen.exament4.model.Curso;
 import org.iesbelen.exament4.service.CursoService;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,34 +19,35 @@ public class CursoController {
     }
 
     @GetMapping({"", "/"})
-    public Page<CursoDTO> all( // Cambiado de Page<Curso> a Page<CursoDTO>
-                               @RequestParam(required = false, defaultValue = "titulo") String campo,
-                               @RequestParam(required = false) String busqueda,
-                               @RequestParam(defaultValue = "0") int pagina,
-                               @RequestParam(defaultValue = "10") int tamano,
-                               @RequestParam(defaultValue = "precio") String ordenacion,
-                               @RequestParam(defaultValue = "asc") String sentido) {
+    public ResponseEntity<Page<CursoDTO>> all(
+            @RequestParam(required = false, defaultValue = "titulo") String campo,
+            @RequestParam(required = false) String busqueda,
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int tamano,
+            @RequestParam(defaultValue = "precio") String ordenacion,
+            @RequestParam(defaultValue = "asc") String sentido) {
 
-        return this.cursoService.getAllFiltered(campo, busqueda, pagina, tamano, ordenacion, sentido);
+        return ResponseEntity.ok(this.cursoService.getAllFiltered(campo, busqueda, pagina, tamano, ordenacion, sentido));
     }
 
     @PostMapping({"", "/"})
-    public Curso newCurso(@RequestBody Curso curso) {
-        return this.cursoService.save(curso);
+    public ResponseEntity<Curso> newCurso(@RequestBody Curso curso) {
+        return new ResponseEntity<>(this.cursoService.save(curso), HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public Curso one(@PathVariable("id") Long id) {
-        return this.cursoService.findById(id);
+    public ResponseEntity<Curso> one(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(this.cursoService.findById(id));
     }
 
     @PutMapping("/{id}")
-    public Curso replace(@PathVariable("id") Long id, @RequestBody Curso curso) {
-        return this.cursoService.replace(id, curso);
+    public ResponseEntity<Curso> replace(@PathVariable("id") Long id, @RequestBody Curso curso) {
+        return ResponseEntity.ok(this.cursoService.replace(id, curso));
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
         this.cursoService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }
