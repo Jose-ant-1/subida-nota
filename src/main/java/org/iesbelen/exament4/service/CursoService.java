@@ -1,5 +1,6 @@
 package org.iesbelen.exament4.service;
 
+import org.iesbelen.exament4.dto.CursoDTO;
 import org.iesbelen.exament4.model.Curso;
 import org.iesbelen.exament4.repository.CursoRepository;
 import org.springframework.data.domain.Page;
@@ -49,15 +50,21 @@ public class CursoService {
         }).orElseThrow(() -> new RuntimeException("No existe curso con id: " + id));
     }
 
-    public Page<Curso> getAllFiltered(String campo, String busqueda, int pagina, int tamano, String ordenacion, String sentido) {
-         // ordenar
+    public Page<CursoDTO> getAllFiltered(String campo, String busqueda, int pagina, int tamano, String ordenacion, String sentido) {
+        // ordenacion y paginacion
         Sort sort = Sort.by(sentido.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC,
                 (ordenacion == null || ordenacion.isEmpty()) ? "precio" : ordenacion);
-
-        // paginar
         Pageable pageable = PageRequest.of(pagina, tamano, sort);
 
-        return cursoRepository.findByFiltro(campo, busqueda, pageable);
+        // obtener los datos
+        Page<Curso> cursosPage = this.cursoRepository.findByFiltro(campo, busqueda, pageable);
+
+        // Mapear de Entidad a DTO
+        return cursosPage.map(c -> CursoDTO.builder()
+                .titulo(c.getTitulo())
+                .resumen(c.getResumen())
+                .precio(c.getPrecio())
+                .build());
     }
 
 }

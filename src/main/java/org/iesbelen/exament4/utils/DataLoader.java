@@ -57,7 +57,7 @@ public class DataLoader implements CommandLineRunner {
         List<Curso> cursos = cursoRepository.findAll();
 
         for (int i = 0; i < 5; i++) {
-            inscripcionRepository.save(Inscripccion.builder()
+            inscripcionRepository.save(Inscripcion.builder()
                     .alumno(alumnos.get(i))
                     .curso(cursos.get(i))
                     .build());

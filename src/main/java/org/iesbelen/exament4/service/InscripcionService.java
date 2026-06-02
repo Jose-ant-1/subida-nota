@@ -3,7 +3,7 @@ package org.iesbelen.exament4.service;
 import org.iesbelen.exament4.dto.InscripcionDTO;
 import org.iesbelen.exament4.model.Alumno;
 import org.iesbelen.exament4.model.Curso;
-import org.iesbelen.exament4.model.Inscripccion;
+import org.iesbelen.exament4.model.Inscripcion;
 import org.iesbelen.exament4.repository.AlumnoRepository;
 import org.iesbelen.exament4.repository.CursoRepository;
 import org.iesbelen.exament4.repository.InscripcionRepository;
@@ -33,14 +33,14 @@ public class InscripcionService {
         Curso curso = cursoRepository.findById(cursoId)
                 .orElseThrow(() -> new RuntimeException("Curso no encontrado"));
 
-        Inscripccion inscripcion = Inscripccion.builder()
+        Inscripcion inscripcion = Inscripcion.builder()
                 .alumno(alumno)
                 .curso(curso)
                 .build();
         inscripcionRepository.save(inscripcion);
 
-        List<Inscripccion> inscripciones = inscripcionRepository.findByAlumnoId(alumnoId);
-        List<Curso> cursosInscritos = inscripciones.stream().map(Inscripccion::getCurso).toList();
+        List<Inscripcion> inscripciones = inscripcionRepository.findByAlumnoId(alumnoId);
+        List<Curso> cursosInscritos = inscripciones.stream().map(Inscripcion::getCurso).toList();
 
         BigDecimal total = cursosInscritos.stream()
                 .map(Curso::getPrecio)

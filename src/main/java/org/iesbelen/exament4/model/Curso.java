@@ -36,6 +36,6 @@ public class Curso {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "curso")
-    private List<Inscripccion> inscripcciones;
+    private List<Inscripcion> inscripcciones;
 
 }

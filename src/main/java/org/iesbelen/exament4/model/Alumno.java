@@ -29,6 +29,6 @@ public class Alumno {
     @JsonIgnore
     @ToString.Exclude
     @OneToMany(mappedBy = "alumno")
-    private List<Inscripccion> inscripcciones;
+    private List<Inscripcion> inscripcciones;
 
 }
